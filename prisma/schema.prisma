@@ -1,0 +1,35 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model DeviceType {
+  deviceTypeID Int      @id @default(autoincrement())
+  name         String
+  devices      Device[]
+}
+
+model Device {
+  deviceID     Int         @id @default(autoincrement())
+  name         String
+  description  String?
+  identifier   String?
+  deviceTypeID Int
+  deviceType   DeviceType  @relation(fields: [deviceTypeID], references: [deviceTypeID])
+  datapoints   Datapoint[]
+}
+
+model Datapoint {
+  datapointID Int      @id @default(autoincrement())
+  deviceID    Int
+  device      Device   @relation(fields: [deviceID], references: [deviceID])
+  timestamp   DateTime
+  value       Float
+}
