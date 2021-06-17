@@ -1,34 +1,40 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Device } from '@prisma/client';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
+@ApiTags('devices')
 @Controller('devices')
 export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
-  create(@Body() createDeviceDto: CreateDeviceDto) {
+  @ApiOperation({ summary: 'Create device' })
+  async create(@Body() createDeviceDto: CreateDeviceDto): Promise<Device> {
     return this.devicesService.create(createDeviceDto);
   }
 
   @Get()
-  findAll() {
-    return this.devicesService.findAll();
+  @ApiOperation({ summary: 'Get all devices' })
+  async findAll(): Promise<Device[]> {
+    return this.devicesService.findAll({});
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.devicesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
-    return this.devicesService.update(+id, updateDeviceDto);
+  @ApiOperation({ summary: 'Get a device' })
+  async findOne(@Param('id') id: string): Promise<Device> {
+    return this.devicesService.findOne({
+      deviceID: Number(id)
+    });
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.devicesService.remove(+id);
+  @ApiOperation({ summary: 'Delete a device' })
+  async remove(@Param('id') id: string): Promise<Device> {
+    return this.devicesService.remove({
+      deviceID: Number(id)
+    });
   }
 }

@@ -1,26 +1,52 @@
 import { Injectable } from '@nestjs/common';
+import { Device, Prisma } from '@prisma/client';
+import { PrismaService } from '../prisma.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
 @Injectable()
 export class DevicesService {
-  create(createDeviceDto: CreateDeviceDto) {
-    return 'This action adds a new device';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createDeviceDto: CreateDeviceDto): Promise<Device> {
+    const { name, description, identifier, deviceTypeID } = createDeviceDto;
+    
+    const data: Prisma.DeviceCreateInput = {
+      name,
+      description,
+      identifier,
+      deviceType: {
+        connect: {
+          deviceTypeID
+        }
+      }
+    }
+
+    return this.prisma.device.create({ data });
   }
 
-  findAll() {
-    return `This action returns all devices`;
+  async findAll(params: {
+    skip?: number;
+    take?: number;
+    cursor?: Prisma.DeviceWhereUniqueInput;
+    where?: Prisma.DeviceWhereInput;
+    orderBy?: Prisma.DeviceOrderByInput
+  }): Promise<Device[]> {
+    return this.prisma.device.findMany(params);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} device`;
+  async findOne(where: Prisma.DeviceWhereUniqueInput): Promise<Device> {
+    return this.prisma.device.findUnique({ where });
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto) {
-    return `This action updates a #${id} device`;
+  async update(params: {
+    where: Prisma.DeviceWhereUniqueInput;
+    data: Prisma.DeviceUpdateInput;
+  }): Promise<Device> {
+    return this.prisma.device.update(params);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} device`;
+  async remove(where: Prisma.DeviceWhereUniqueInput): Promise<Device> {
+    return this.prisma.device.delete({ where });
   }
 }
