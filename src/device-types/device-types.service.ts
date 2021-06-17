@@ -25,11 +25,10 @@ export class DeviceTypesService {
   }
 
   async update(params: {
-    where: Prisma.DeviceTypeWhereUniqueInput,
-    data: Prisma.DeviceTypeUpdateInput
+    where: Prisma.DeviceTypeWhereUniqueInput;
+    data: Prisma.DeviceTypeUpdateInput;
   }): Promise<DeviceType> {
-    const { where, data } = params;
-    return this.prisma.deviceType.update({ data, where });
+    return this.prisma.deviceType.update(params);
   }
 
   async remove(where: Prisma.DeviceTypeWhereUniqueInput): Promise<DeviceType> {
