@@ -3,12 +3,16 @@ import { SensorsService } from './sensors.service';
 import { CreateSensorDto } from './dto/create-sensor.dto';
 import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Sensor } from '@prisma/client';
+import { Datapoint, Sensor } from '@prisma/client';
+import { DatapointsService } from '../datapoints/datapoints.service';
 
 @ApiTags('sensors')
 @Controller('sensors')
 export class SensorsController {
-  constructor(private readonly sensorsService: SensorsService) {}
+  constructor(
+    private readonly sensorsService: SensorsService,
+    private readonly datapointsService: DatapointsService
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create sensor' })
@@ -35,6 +39,15 @@ export class SensorsController {
   async remove(@Param('id') id: string): Promise<Sensor> {
     return this.sensorsService.remove({
       sensorID: Number(id)
+    });
+  }
+
+  @Get(':id/datapoints')
+  async findOneWithDatapoints(@Param('id') id: string): Promise<Datapoint[]> {
+    return this.datapointsService.findAll({
+      where: {
+        sensorID: Number(id)
+      }
     });
   }
 }
