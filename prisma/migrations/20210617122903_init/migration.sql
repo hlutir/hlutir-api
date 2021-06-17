@@ -15,10 +15,19 @@ CREATE TABLE "Device" (
 );
 
 -- CreateTable
+CREATE TABLE "Sensor" (
+    "sensorID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "deviceID" INTEGER NOT NULL,
+    "name" TEXT NOT NULL,
+    "unit" TEXT,
+    FOREIGN KEY ("deviceID") REFERENCES "Device" ("deviceID") ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- CreateTable
 CREATE TABLE "Datapoint" (
     "datapointID" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "deviceID" INTEGER NOT NULL,
+    "sensorID" INTEGER NOT NULL,
     "timestamp" DATETIME NOT NULL,
     "value" REAL NOT NULL,
-    FOREIGN KEY ("deviceID") REFERENCES "Device" ("deviceID") ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY ("sensorID") REFERENCES "Sensor" ("sensorID") ON DELETE CASCADE ON UPDATE CASCADE
 );

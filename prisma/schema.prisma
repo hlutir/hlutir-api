@@ -17,19 +17,28 @@ model DeviceType {
 }
 
 model Device {
-  deviceID     Int         @id @default(autoincrement())
+  deviceID     Int        @id @default(autoincrement())
   name         String
   description  String?
   identifier   String?
   deviceTypeID Int
-  deviceType   DeviceType  @relation(fields: [deviceTypeID], references: [deviceTypeID])
-  datapoints   Datapoint[]
+  deviceType   DeviceType @relation(fields: [deviceTypeID], references: [deviceTypeID])
+  sensors      Sensor[]
+}
+
+model Sensor {
+  sensorID   Int         @id @default(autoincrement())
+  deviceID   Int
+  device     Device      @relation(fields: [deviceID], references: [deviceID])
+  name       String
+  unit       String?
+  datapoints Datapoint[]
 }
 
 model Datapoint {
   datapointID Int      @id @default(autoincrement())
-  deviceID    Int
-  device      Device   @relation(fields: [deviceID], references: [deviceID])
+  sensorID    Int
+  sensor      Sensor   @relation(fields: [sensorID], references: [sensorID])
   timestamp   DateTime
   value       Float
 }
