@@ -43,6 +43,7 @@ export class SensorsController {
   }
 
   @Get(':id/datapoints')
+  @ApiOperation({ summary: 'Get all datapoints for a sensor' })
   async findOneWithDatapoints(@Param('id') id: string): Promise<Datapoint[]> {
     return this.datapointsService.findAll({
       where: {
