@@ -19,7 +19,11 @@ export class DatapointsController {
   @Get()
   @ApiOperation({ summary: 'Get all datapoints' })
   async findAll(): Promise<Datapoint[]> {
-    return this.datapointsService.findAll({});
+    return this.datapointsService.findAll({
+      orderBy: {
+        timestamp: 'asc'
+      }
+    });
   }
 
   @Get(':id')

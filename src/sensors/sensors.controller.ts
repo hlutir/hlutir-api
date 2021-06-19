@@ -5,13 +5,15 @@ import { UpdateSensorDto } from './dto/update-sensor.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Datapoint, Sensor } from '@prisma/client';
 import { DatapointsService } from '../datapoints/datapoints.service';
+import { PrismaService } from '../prisma.service';
 
 @ApiTags('sensors')
 @Controller('sensors')
 export class SensorsController {
   constructor(
     private readonly sensorsService: SensorsService,
-    private readonly datapointsService: DatapointsService
+    private readonly datapointsService: DatapointsService,
+    private readonly prisma: PrismaService
   ) {}
 
   @Post()
@@ -48,6 +50,9 @@ export class SensorsController {
     return this.datapointsService.findAll({
       where: {
         sensorID: Number(id)
+      },
+      orderBy: {
+        timestamp: 'asc'
       }
     });
   }
