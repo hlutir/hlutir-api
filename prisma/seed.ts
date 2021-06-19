@@ -86,5 +86,58 @@ export async function seed() {
     });
     //#endregion
 
+    //#region Sensors
+    const sensor1DeviceESP32WS = await prisma.sensor.upsert({
+        where: { sensorID: 1 },
+        update: {},
+        create: {
+            sensorID: 1,
+            deviceID: 1,
+            name: 'Temperature',
+            unit: '°C'
+        }
+    });
+
+    const sensor2DeviceESP32WS = await prisma.sensor.upsert({
+        where: { sensorID: 2 },
+        update: {},
+        create: {
+            sensorID: 2,
+            deviceID: 1,
+            name: 'Pressure',
+            unit: 'hPa'
+        }
+    });
+
+    const sensor3DeviceESP32WS = await prisma.sensor.upsert({
+        where: { sensorID: 3 },
+        update: {},
+        create: {
+            sensorID: 3,
+            deviceID: 1,
+            name: 'Humidity',
+            unit: '%'
+        }
+    });
+
+    const sensor4DeviceESP32WS = await prisma.sensor.upsert({
+        where: { sensorID: 4 },
+        update: {},
+        create: {
+            sensorID: 4,
+            deviceID: 1,
+            name: 'Battery level',
+            unit: '%'
+        }
+    });
+
+    console.log({
+        sensor1DeviceESP32WS,
+        sensor2DeviceESP32WS,
+        sensor3DeviceESP32WS,
+        sensor4DeviceESP32WS
+    });
+    //#endregion
+
     await prisma.$disconnect();
 }
