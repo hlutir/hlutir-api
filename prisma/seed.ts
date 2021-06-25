@@ -1,4 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import * as bcrypt from "bcrypt";
+import { PrismaClient, Role } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export async function seed() {
@@ -136,6 +137,45 @@ export async function seed() {
         sensor2DeviceESP32WS,
         sensor3DeviceESP32WS,
         sensor4DeviceESP32WS
+    });
+    //#endregion
+
+    //#region Users
+    const user1 = await prisma.user.upsert({
+        where: { userID: 1 },
+        update: {},
+        create: {
+            userID: 1,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            firstName: "Jonas",
+            lastName: "Claes",
+            username: "jonasclaes",
+            email: null,
+            passwordHash: await bcrypt.hash("thisisaweakpassword", 12),
+            role: Role.ADMIN
+        }
+    });
+
+    const user2 = await prisma.user.upsert({
+        where: { userID: 2 },
+        update: {},
+        create: {
+            userID: 2,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+            firstName: "John",
+            lastName: "Doe",
+            username: "johndoe",
+            email: null,
+            passwordHash: await bcrypt.hash("anotherweakpassword", 12),
+            role: Role.USER
+        }
+    });
+
+    console.log({
+        user1,
+        user2
     });
     //#endregion
 
