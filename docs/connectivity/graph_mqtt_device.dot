@@ -1,6 +1,7 @@
 digraph G {
-    graph [pad=0.4, nodesep=1, ranksep=0.8, label="Device MQTT graph\n\n", labelloc=top, orientation=portrait, bgcolor=transparent];
+    graph [pad=0.4, nodesep=1, ranksep=0.8, bgcolor=transparent];
     splines=true;
+    node [color=grey, fillcolor=grey, style=filled]
 
     /* Entities */
     rootNode [label="Root node"];
