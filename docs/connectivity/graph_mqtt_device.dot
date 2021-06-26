@@ -1,0 +1,30 @@
+digraph G {
+    graph [pad=0.4, nodesep=1, ranksep=0.8, label="Device MQTT graph\n\n", labelloc=top, orientation=portrait];
+    splines=true;
+
+    /* Entities */
+    rootNode [label="Root node"];
+    v1Node [label="v1"];
+    devicesNode [label="devices"];
+    deviceClientIDNode [label="{deviceClientID}\nUnique identifier of the\ndevice that is generated\non the platform."];
+    deviceTelemetryNode [label="telemetry\nPUBLISH\nPublish sensor data."];
+    deviceDataNode [label="data\nUsed to establish a\nfull-duplex communication\nchannel."];
+    deviceDataRequestNode [label="request\nPUBLISH"];
+    deviceDataRequestReceiveNode [label="receive\nSUBSCRIBE"];
+    deviceDataExternalNode [label="external\nSUBSCRIBE"];
+    deviceDataExternalSendNode [label="send\nPUBLISH"];
+
+    /* Relationships */
+    rootNode -> v1Node;
+    v1Node -> devicesNode [label=" /"];
+    devicesNode -> deviceClientIDNode [label=" /"];
+    deviceClientIDNode -> deviceTelemetryNode [label="/"];
+    deviceClientIDNode -> deviceDataNode [label=" /"];
+    deviceDataNode -> deviceDataRequestNode [label=" /"];
+    deviceDataRequestNode -> deviceDataRequestReceiveNode [label=" /"];
+    deviceDataNode -> deviceDataExternalNode [label=" /"];
+    deviceDataExternalNode -> deviceDataExternalSendNode [label=" /"];
+
+    /* Ranks */
+    // { rank=same; rootNode; };
+}
