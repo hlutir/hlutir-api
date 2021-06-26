@@ -1,5 +1,5 @@
 digraph G {
-    graph [pad=0.4, nodesep=1, ranksep=0.8, label="Device MQTT graph\n\n", labelloc=top, orientation=portrait];
+    graph [pad=0.4, nodesep=1, ranksep=0.8, label="Device MQTT graph\n\n", labelloc=top, orientation=portrait, bgcolor=transparent];
     splines=true;
 
     /* Entities */

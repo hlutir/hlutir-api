@@ -8,7 +8,6 @@
  viewBox="0.00 0.00 648.91 928.41" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(28.8 899.61)">
 <title>G</title>
-<polygon fill="white" stroke="transparent" points="-28.8,28.8 -28.8,-899.61 620.11,-899.61 620.11,28.8 -28.8,28.8"/>
 <text text-anchor="middle" x="295.66" y="-855.61" font-family="Times-Roman" font-size="14.00">Device MQTT graph</text>
 <!-- rootNode -->
 <g id="node1" class="node">
