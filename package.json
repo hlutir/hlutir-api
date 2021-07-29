@@ -1,9 +1,8 @@
 {
   "name": "hlutir-api",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
-  "private": true,
+  "description": "A fast, robust and lightweight IoT (Internet-of-things) solution. | API",
+  "author": "Jonas Claes <jonas@jonasclaes.be>",
   "license": "BSD-3-Clause",
   "scripts": {
     "prebuild": "rimraf dist",
