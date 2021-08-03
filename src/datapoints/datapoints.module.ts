@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DatapointsService } from './datapoints.service';
+import { DatabaseSvcModule, DatapointsService } from '@hlutir/common';
 import { DatapointsController } from './datapoints.controller';
-import { PrismaService } from '../prisma.service';
 
 @Module({
+  imports: [DatabaseSvcModule.register()],
   controllers: [DatapointsController],
-  providers: [DatapointsService, PrismaService]
+  providers: [DatapointsService]
 })
 export class DatapointsModule {}

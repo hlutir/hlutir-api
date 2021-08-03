@@ -1,40 +1,32 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { DeviceType } from '@prisma/client';
-import { DeviceTypesService } from './device-types.service';
-import { CreateDeviceTypeDto } from './dto/create-device-type.dto';
-import { UpdateDeviceTypeDto } from './dto/update-device-type.dto';
+import { DeviceTypesService, ICreateDeviceTypeDto, IDeviceType, IUpdateDeviceTypeDto } from '@hlutir/common';
 
-@ApiTags('device-types')
 @Controller('device-types')
 export class DeviceTypesController {
   constructor(private readonly deviceTypesService: DeviceTypesService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Create device type' })
-  async create(@Body() createDeviceTypeDto: CreateDeviceTypeDto): Promise<DeviceType> {
-    return this.deviceTypesService.create(createDeviceTypeDto);
+  create(@Body() data: ICreateDeviceTypeDto): Promise<IDeviceType> {
+    return this.deviceTypesService.create(data);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all device types' })
-  async findAll(): Promise<DeviceType[]> {
-    return this.deviceTypesService.findAll({});
+  findAll(): Promise<IDeviceType[]> {
+    return this.deviceTypesService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a device type' })
-  async findOne(@Param('id') id: string): Promise<DeviceType> {
-    return this.deviceTypesService.findOne({
-      deviceTypeID: Number(id)
-    });
+  findOne(@Param('id') id: string): Promise<IDeviceType> {
+    return this.deviceTypesService.findOne(Number(id));
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() data: IUpdateDeviceTypeDto): Promise<IDeviceType> {
+    return this.deviceTypesService.update(Number(id), data);
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a device type' })
-  async remove(@Param('id') id: string): Promise<DeviceType> {
-    return this.deviceTypesService.remove({
-      deviceTypeID: Number(id)
-    });
+  remove(@Param('id') id: string): Promise<IDeviceType> {
+    return this.deviceTypesService.remove(Number(id));
   }
 }

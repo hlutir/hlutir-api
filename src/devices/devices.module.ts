@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DevicesService } from './devices.service';
+import { DatabaseSvcModule, DevicesService } from '@hlutir/common';
 import { DevicesController } from './devices.controller';
-import { PrismaService } from '../prisma.service';
 
 @Module({
+  imports: [DatabaseSvcModule.register()],
   controllers: [DevicesController],
-  providers: [DevicesService, PrismaService]
+  providers: [DevicesService]
 })
 export class DevicesModule {}

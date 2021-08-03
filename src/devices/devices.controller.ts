@@ -1,40 +1,32 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Device } from '@prisma/client';
-import { DevicesService } from './devices.service';
-import { CreateDeviceDto } from './dto/create-device.dto';
-import { UpdateDeviceDto } from './dto/update-device.dto';
+import { DevicesService, ICreateDeviceDto, IDevice, IUpdateDeviceDto } from '@hlutir/common';
 
-@ApiTags('devices')
 @Controller('devices')
 export class DevicesController {
-  constructor(private readonly devicesService: DevicesService) {}
+    constructor(private readonly devicesService: DevicesService) { }
 
-  @Post()
-  @ApiOperation({ summary: 'Create device' })
-  async create(@Body() createDeviceDto: CreateDeviceDto): Promise<Device> {
-    return this.devicesService.create(createDeviceDto);
-  }
+    @Post()
+    create(@Body() data: ICreateDeviceDto): Promise<IDevice> {
+        return this.devicesService.create(data);
+    }
 
-  @Get()
-  @ApiOperation({ summary: 'Get all devices' })
-  async findAll(): Promise<Device[]> {
-    return this.devicesService.findAll({});
-  }
+    @Get()
+    findAll(): Promise<IDevice[]> {
+        return this.devicesService.findAll();
+    }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a device' })
-  async findOne(@Param('id') id: string): Promise<Device> {
-    return this.devicesService.findOne({
-      deviceID: Number(id)
-    });
-  }
+    @Get(':id')
+    findOne(@Param('id') id: string): Promise<IDevice> {
+        return this.devicesService.findOne(Number(id));
+    }
 
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete a device' })
-  async remove(@Param('id') id: string): Promise<Device> {
-    return this.devicesService.remove({
-      deviceID: Number(id)
-    });
-  }
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() data: IUpdateDeviceDto): Promise<IDevice> {
+        return this.devicesService.update(Number(id), data);
+    }
+
+    @Delete(':id')
+    remove(@Param('id') id: string): Promise<IDevice> {
+        return this.devicesService.remove(Number(id));
+    }
 }

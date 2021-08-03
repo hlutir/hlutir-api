@@ -1,11 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { PrismaService } from '../prisma.service';
-
+import { DatabaseSvcModule, UsersService } from '@hlutir/common';
 @Module({
-  providers: [UsersService, PrismaService],
-  exports: [UsersService],
-  controllers: [UsersController]
+  imports: [DatabaseSvcModule.register()],
+  controllers: [UsersController],
+  providers: [UsersService]
 })
 export class UsersModule {}

@@ -1,59 +1,32 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { SensorsService } from './sensors.service';
-import { CreateSensorDto } from './dto/create-sensor.dto';
-import { UpdateSensorDto } from './dto/update-sensor.dto';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Datapoint, Sensor } from '@prisma/client';
-import { DatapointsService } from '../datapoints/datapoints.service';
-import { PrismaService } from '../prisma.service';
+import { SensorsService, ICreateSensorDto, ISensor, IUpdateSensorDto } from '@hlutir/common';
 
-@ApiTags('sensors')
 @Controller('sensors')
 export class SensorsController {
-  constructor(
-    private readonly sensorsService: SensorsService,
-    private readonly datapointsService: DatapointsService,
-    private readonly prisma: PrismaService
-  ) {}
+    constructor(private readonly sensorsService: SensorsService) { }
 
-  @Post()
-  @ApiOperation({ summary: 'Create sensor' })
-  async create(@Body() createSensorDto: CreateSensorDto): Promise<Sensor> {
-    return this.sensorsService.create(createSensorDto);
-  }
+    @Post()
+    create(@Body() data: ICreateSensorDto): Promise<ISensor> {
+        return this.sensorsService.create(data);
+    }
 
-  @Get()
-  @ApiOperation({ summary: 'Get all sensors' })
-  async findAll(): Promise<Sensor[]> {
-    return this.sensorsService.findAll({});
-  }
+    @Get()
+    findAll(): Promise<ISensor[]> {
+        return this.sensorsService.findAll();
+    }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get a sensor' })
-  async findOne(@Param('id') id: string): Promise<Sensor> {
-    return this.sensorsService.findOne({
-      sensorID: Number(id)
-    });
-  }
+    @Get(':id')
+    findOne(@Param('id') id: string): Promise<ISensor> {
+        return this.sensorsService.findOne(Number(id));
+    }
 
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete a sensor' })
-  async remove(@Param('id') id: string): Promise<Sensor> {
-    return this.sensorsService.remove({
-      sensorID: Number(id)
-    });
-  }
+    @Patch(':id')
+    update(@Param('id') id: string, @Body() data: IUpdateSensorDto): Promise<ISensor> {
+        return this.sensorsService.update(Number(id), data);
+    }
 
-  @Get(':id/datapoints')
-  @ApiOperation({ summary: 'Get all datapoints for a sensor' })
-  async findOneWithDatapoints(@Param('id') id: string): Promise<Datapoint[]> {
-    return this.datapointsService.findAll({
-      where: {
-        sensorID: Number(id)
-      },
-      orderBy: {
-        timestamp: 'asc'
-      }
-    });
-  }
+    @Delete(':id')
+    remove(@Param('id') id: string): Promise<ISensor> {
+        return this.sensorsService.remove(Number(id));
+    }
 }

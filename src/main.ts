@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  
   // Create a Swagger UI / OpenAPI API documentation.
   const documentBuilder = new DocumentBuilder()
     .setTitle('Hlutir API')
