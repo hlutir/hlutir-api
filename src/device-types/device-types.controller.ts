@@ -3,11 +3,11 @@ import { DeviceTypesService, ICreateDeviceTypeDto, IDeviceType, IUpdateDeviceTyp
 
 @Controller('device-types')
 export class DeviceTypesController {
-    constructor(private readonly deviceTypesService: DeviceTypesService) {}
+  constructor(private readonly deviceTypesService: DeviceTypesService) {}
 
   @Post()
-  create(@Body() createUserDto: ICreateDeviceTypeDto): Promise<IDeviceType> {
-    return this.deviceTypesService.create(createUserDto);
+  create(@Body() data: ICreateDeviceTypeDto): Promise<IDeviceType> {
+    return this.deviceTypesService.create(data);
   }
 
   @Get()
