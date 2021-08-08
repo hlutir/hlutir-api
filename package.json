@@ -1,6 +1,6 @@
 {
   "name": "@hlutir/api",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A fast, robust and lightweight IoT (Internet-of-things) solution. | API",
   "author": "Jonas Claes <jonas@jonasclaes.be>",
   "license": "BSD-3-Clause",
@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@hlutir/common": "^0.0.1",
+    "@hlutir/common": "0.0.6",
     "@nestjs/common": "^8.0.5",
     "@nestjs/core": "^8.0.5",
     "@nestjs/jwt": "^8.0.0",

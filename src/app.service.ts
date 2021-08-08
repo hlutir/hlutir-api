@@ -3,7 +3,7 @@ import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class AppService implements OnApplicationBootstrap, OnApplicationShutdown {
-    constructor(@Inject('DATABASE_SVC') private client: ClientProxy) { }
+    constructor(@Inject('HLUTIR_MICROSERVICE') private client: ClientProxy) { }
 
     async onApplicationBootstrap() {
         await this.client.connect();

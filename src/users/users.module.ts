@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
-import { DatabaseSvcModule, UsersService } from '@hlutir/common';
+import { MicroserviceModule, UsersService } from '@hlutir/common';
 @Module({
-  imports: [DatabaseSvcModule.register()],
+  imports: [MicroserviceModule.register()],
   controllers: [UsersController],
   providers: [UsersService]
 })
